@@ -62,16 +62,26 @@ module wall() {
 
 post();
 
-translate( v = [42 ,-34,0] ) wall();
+translate( v = [WALLDEPTH*2,0,0] )
+	wall();
 
-translate ( v = [34,-42,0] ) rotate(90) wall();
+translate( v = [WALLDEPTH*4+SEGLENGTH,0,0] )
+	post();
 
-rotate(180) translate ( v = [0,8,0] ) wall();
+translate( v = [WALLDEPTH*4+SEGLENGTH,WALLDEPTH*2,0])
+	rotate(90)
+		wall();
 
-rotate(270) translate ( v = [0,8,0] ) wall();
+translate( v = [WALLDEPTH*4+SEGLENGTH,WALLDEPTH*4+SEGLENGTH,0])
+	post();
 
-translate( v = [ 42, 0, 0 ] ) post();
+translate( v = [WALLDEPTH*2+SEGLENGTH,WALLDEPTH*4+SEGLENGTH,0])
+	rotate(180)
+		wall();
 
-translate( v = [ 0, -42, 0] ) post();
+translate( v = [0, WALLDEPTH*4+SEGLENGTH,0])
+	post();
 
-translate( v = [42, -42, 0] ) post();
+translate( v = [0, WALLDEPTH*2,0])
+	rotate(90)
+		wall();
