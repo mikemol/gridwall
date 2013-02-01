@@ -45,16 +45,16 @@ module wall() {
 		// long strip protruding from the bottom. This protrusion is intended
 		// to be fitted into a large horizontal plate under the wall, affixing
 		// it in place on the game map.
-		translate( v=[0-WALLDEPTH/2,0,0]) union() {
-			cube(size = [WALLDEPTH,SEGLENGTH,WALLHEIGHT]);
-			translate( v = [WALLDEPTH/4,0,0-WALLDEPTH/2])
-				cube( size = [WALLDEPTH/2,SEGLENGTH,WALLDEPTH/2] );
+		translate( v=[0,0-WALLDEPTH/2,0]) union() {
+			cube(size = [SEGLENGTH,WALLDEPTH,WALLHEIGHT]);
+			translate( v = [0,WALLDEPTH/4,0-WALLDEPTH/2])
+				cube( size = [SEGLENGTH,WALLDEPTH/2,WALLDEPTH/2] );
 		}
 		// The interface sockets are set at either end of the wall
 		// segment.
 		union() {
-			translate( v=[0,0-WALLDEPTH/2,0]) post();
-			translate( v=[0,SEGLENGTH+WALLDEPTH/2,0]) post();
+			translate( v=[0-WALLDEPTH/2, 0,0]) post();
+			translate( v=[SEGLENGTH+WALLDEPTH/2,0,0]) post();
 		}
 
 	}
