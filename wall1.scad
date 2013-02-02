@@ -36,7 +36,6 @@ module post() {
 
 // Wall module. 
 module wall() {
-
 	// The wall consists of a core component, with interface sockets placed
 	// at the end via CSG subtraction. The interface is defined by the
 	// post() module.
@@ -60,28 +59,41 @@ module wall() {
 	}
 }
 
+// Plate module; what the walls and posts should be set on.
+module plate() {
+	// The plate module has just enough space to place one post and two
+	// walls. It's defined by taking a cube and subtracting the
+	// interfacees under the walls and posts.
+	difference() {
+		// The basic plate.
+		cube(size=[SEGLENGTH+WALLDEPTH,SEGLENGTH+WALLDEPTH,WALLDEPTH]);
+
+		// The post and two walls, moved into place.
+		translate( v = [WALLDEPTH/2,WALLDEPTH/2,WALLDEPTH] )
+			union() {
+				post();
+	
+				translate( v = [WALLDEPTH/2,0,0] )
+					wall();
+	
+				rotate(90)
+					translate( v = [WALLDEPTH/2,0,0] )
+						wall();
+			}
+	}
+}
+
+// Demonstrate the modules.
+
+translate( v = [0-WALLDEPTH/2,0-WALLDEPTH/2,0-WALLDEPTH*2] )
+	plate();
+
 post();
 
 translate( v = [WALLDEPTH*2,0,0] )
 	wall();
 
-translate( v = [WALLDEPTH*4+SEGLENGTH,0,0] )
-	post();
-
-translate( v = [WALLDEPTH*4+SEGLENGTH,WALLDEPTH*2,0])
-	rotate(90)
+rotate(90)
+	translate( v = [WALLDEPTH*2,0,0] )
 		wall();
 
-translate( v = [WALLDEPTH*4+SEGLENGTH,WALLDEPTH*4+SEGLENGTH,0])
-	post();
-
-translate( v = [WALLDEPTH*2+SEGLENGTH,WALLDEPTH*4+SEGLENGTH,0])
-	rotate(180)
-		wall();
-
-translate( v = [0, WALLDEPTH*4+SEGLENGTH,0])
-	post();
-
-translate( v = [0, WALLDEPTH*2,0])
-	rotate(90)
-		wall();
