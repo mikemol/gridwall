@@ -54,9 +54,26 @@ module wall() {
 		union() {
 			translate( v=[0-WALLDEPTH/2, 0,0]) post();
 			translate( v=[SEGLENGTH+WALLDEPTH/2,0,0]) post();
+			// Socket for the platelines on the bottom of the
+			// plate.
+			translate( v=[WALLDEPTH,0-WALLDEPTH/4,WALLHEIGHT-1] )
+				cube(size=[
+					SEGLENGTH-WALLDEPTH*2,
+					WALLDEPTH/2,
+					WALLDEPTH/4]
+				);
 		}
 
 	}
+}
+
+
+// The plate lines go on the bottom of the plate, and is intended to sit loosely
+// in the interface slot on the top of a plate set underneath, and on the top of
+// walls.
+module plateline() {
+	translate( v = [WALLDEPTH*2,WALLDEPTH*3/8,-WALLDEPTH/4] )
+		cube(size=[SEGLENGTH-WALLDEPTH*2,WALLDEPTH/4,WALLDEPTH/4]);
 }
 
 // Plate module; what the walls and posts should be set on.
@@ -66,7 +83,17 @@ module plate() {
 	// interfacees under the walls and posts.
 	difference() {
 		// The basic plate.
-		cube(size=[SEGLENGTH+WALLDEPTH,SEGLENGTH+WALLDEPTH,WALLDEPTH]);
+		union() {
+			cube(size=[
+				SEGLENGTH+WALLDEPTH,
+				SEGLENGTH+WALLDEPTH,
+				WALLDEPTH]
+			);
+			plateline();
+			translate( v = [WALLDEPTH,0,0] )
+				rotate(90)
+					plateline();
+		}
 
 		// The post and two walls, moved into place.
 		translate( v = [WALLDEPTH/2,WALLDEPTH/2,WALLDEPTH] )
